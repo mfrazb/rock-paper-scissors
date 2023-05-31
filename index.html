@@ -16,7 +16,14 @@
 
     // ask user how many rounds to play 
     function howManyRounds() {
-        const numOfRounds = prompt(`Welcome to Rock, Paper, Scissors. How many rounds would you like to play?`);
+        let numOfRounds = prompt(`Welcome to Rock, Paper, Scissors. How many rounds would you like to play?`);
+        if (numOfRounds > 10) {
+            numOfRounds = prompt(`That's probably too many for today. Choose less than 10 rounds.`)
+            if (numOfRounds > 10) {
+               alert(`You gotta play by the rules. See ya next time!`); 
+               Window.close();
+            }
+        }
         // uncomment console log when testing function
         // console.log(numOfRounds);
         return numOfRounds;
@@ -96,7 +103,7 @@
 
 
     // play x number of rounds to see who wins 
-    function bestOutOf(num) {
+    function playBestOutOf(num) {
         // play num rounds to see who wins 
         let playerScore = 0;
         let computerScore = 0;
@@ -134,11 +141,11 @@
         }
     }
 
-    // test for 2 rounds of bestOutOf 
-    // bestOutOf(2);
+    // test for 2 rounds of playBestOutOf 
+    // playBestOutOf(2);
 
-    // execute bestOutOf to play x number of rounds of game 
-    bestOutOf(howManyRounds());
+    // execute playBestOutOf to play x number of rounds of game 
+    playBestOutOf(howManyRounds());
 
 </script>
 
