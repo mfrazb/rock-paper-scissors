@@ -1,0 +1,49 @@
+* {
+    font-family: 'Covered By Your Grace', cursive; 
+    margin: 0; 
+}
+
+body {
+    background-color: #FFBF00; 
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+#buttonContainer {
+    flex: 1;
+    padding: 5vh;
+    display: flex;
+    flex-wrap: wrap; 
+    justify-content: space-around;
+    align-items: center;
+    align-content: center;
+    
+}
+
+button.choice {
+   flex: 1;
+   background-color: green; 
+   margin: 5vh;
+   padding: 0.5em;
+   font-size: 3em;
+   border: 0.15em solid black;
+   min-width: 30vh;
+}
+
+.footer-container ul {
+    padding: 2vh;
+    list-style-type: none;
+    font-size: 2em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.mfb-logo {
+    max-height: 50px
+}
+
+a {
+    text-decoration: none; 
+}
