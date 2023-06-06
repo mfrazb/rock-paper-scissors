@@ -8,27 +8,60 @@ body {
     height: 100vh;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
 }
 
-#buttonContainer {
+button {
+    margin: 0;
+}
+
+.game-container {
     flex: 1;
-    padding: 5vh;
+    padding: 2em;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-content: center;
+}
+
+.button-container {
     display: flex;
     flex-wrap: wrap; 
     justify-content: space-around;
     align-items: center;
     align-content: center;
-    
 }
 
 button.choice {
-   flex: 1;
-   background-color: green; 
-   margin: 5vh;
-   padding: 0.5em;
-   font-size: 3em;
-   border: 0.15em solid black;
-   min-width: 30vh;
+    flex: 1;
+    background-color: green; 
+    margin: 1vh;
+    padding: 0.5em;
+    font-size: 3em;
+    border: 0.15em solid black;
+    min-width: 30vh;
+ }
+
+.score-container {
+    flex-shrink: 0;
+    font-size: 2em;
+    padding: 0.5em 1em 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.player-message {
+    text-align: center;
+    margin-bottom: 0.5em;
+}
+
+.scoreboard {
+    max-width: max-content;
+}
+
+.footer-container {
+    flex-shrink: 0;
 }
 
 .footer-container ul {
