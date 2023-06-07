@@ -7,177 +7,50 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Covered+By+Your+Grace&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Covered+By+Your+Grace&display=swap" rel="stylesheet">
     <title>rock paper scissors</title>
+
     <link rel="icon" type="image/x-icon" href="images/rock-favicon.png">
+
+
+    <!-- turn off JS by moving script tag inside comment
+     
+    -->
+
+    <script src="rock-paper-scissors.js" defer></script> 
+    
 </head>
 
 <body>
     <div class="game-container">
         <div class="button-container">
-            <button class="choice">rock</button>
-            <button class="choice">paper</button>
-            <button class="choice">scissors</button>
+            <button class="choice" id="rock">rock</button>
+            <button class="choice" id="paper">paper</button>
+            <button class="choice" id="scissors">scissors</button>
         </div>
         <div class="score-container">
-            <div class="player-message">
-                <p>Here is the sentence that is the placeholder for the player message.</p>
-            </div>
-            <div class="scoreboard">
-                <p>Computer: <br>
-                    You: </p>
-            </div>
-
+            <div id="scoreboard">Click a button to play!</div>
         </div>
     </div>
     <div class="footer-container">
         <ul>
             <li class="footer-text">Created by MFB</li>
-            <a href="https://mfrazb.github.io/" target="_blank"><li>
-                <img class="mfb-logo" src="images/growing_spiral_black.png" alt="MFB Spiral">
-            </li>
+            <a href="https://mfrazb.github.io/" target="_blank">
+                <li>
+                    <img class="mfb-logo" src="images/growing_spiral_black.png" alt="MFB Spiral">
+                </li>
         </ul>
     </div>
-    
+
 </body>
+
 <!--
 <script>
-
-
-    // ask user how many rounds to play 
-    function howManyRounds() {
-        let numOfRounds = prompt(`Welcome to Rock, Paper, Scissors. How many rounds would you like to play?`);
-        if (numOfRounds > 10) {
-            numOfRounds = prompt(`That's probably too many for today. Choose less than 10 rounds.`)
-            if (numOfRounds > 10) {
-               alert(`You gotta play by the rules. See ya next time!`); 
-               Window.close();
-            }
-        }
-        // uncomment console log when testing function
-        // console.log(numOfRounds);
-        return numOfRounds;
-    }
-
-    // test for executing howManyRounds
-    // howManyRounds();
-
-    // get computer choice via random number
-    function getComputerChoice() {
-        // create a variable computerChoice with no assignment 
-        let computerChoice;
-        // randomly select a number between 0 and 1
-        const randomNum = Math.random();
-        // if number is in bottom 3rd (0 - 0.33), assign computerChoice to 'rock' 
-        if (randomNum < 0.33) computerChoice = 'rock';
-        // if number is in 2nd 3rd (0.34 - 0.67), assign computerChoice to 'paper'
-        else if (randomNum < 0.67) computerChoice = 'paper';
-        // if number is in top 3rd (0.68-1), assign computerChoice to 'scissors'
-        else computerChoice = 'scissors';
-        // return computerChoice
-
-        // uncomment console log when testing function
-        // console.log(computerChoice);
-        return computerChoice;
-    }
-
-    // test for computerChoice
-    // getComputerChoice();
-
-    // get playerChoice value via user prompt 
-    function getPlayerChoice() {
-        const choice = prompt(`Rock, paper, scissors...shoot! What's your choice?`);
-        // uncomment console log when testing function
-        // console.log(choice);
-        return choice;
-    }
-
-    // test for playerChoice
-    // getPlayerChoice();
-
-    // play round of rock paper scissors 
-    function playRound(playerChoice, computerChoice) {
-        //input - playerChoice - output of getPlayerChoice function, computerChoice - output of getComputerChoice function
-        //output - string like 'You lose! Paper beats rock!' 
-
-        // if player does not choose rock, paper, or scissors, ask them to try again 
-        if (playerChoice.toLowerCase() !== 'rock' && playerChoice.toLowerCase() !== 'paper' && playerChoice.toLowerCase() !== 'scissors') {
-            playerChoice = prompt(`Your last choice wasn't valid. Please select rock, paper, or scissors.`);
-            return playRound(playerChoice, computerChoice);
-        }
-
-        // if player chooses rock, return in an array [winner, playerMessage]
-        if (playerChoice.toLowerCase() === 'rock') {
-            if (computerChoice === 'paper') return ['computer', `You lost! Paper covers rock!`];
-            else if (computerChoice === 'scissors') return ['player', `You win! Rock smashes scissors!`];
-        }
-
-        // if player chooses paper, return in an array [winner, playerMessage]
-        if (playerChoice.toLowerCase() === 'paper') {
-            if (computerChoice === 'scissors') return ['computer', `You lost! Scissors cut paper!`];
-            else if (computerChoice === 'rock') return ['player', `You win! Paper covers rock!`];
-        }
-
-        // if player chooses scissors, return in an array [winner, playerMessage]
-        if (playerChoice.toLowerCase() === 'scissors') {
-            if (computerChoice === 'rock') return ['computer', `You lost! Rock smashes scissors!`];
-            else if (computerChoice === 'paper') return ['player', `You win! Scissors cut paper!`];
-        }
-
-        // if both players make same choice, share what they choose and that it's a tie 
-        return ['neither', `It's a tie! You both chose ${computerChoice}.`];
-    }
-
-    // test for executing one round of game 
-    // console.log(playRound(getPlayerChoice(), getComputerChoice()));
-
-
-    // play x number of rounds to see who wins 
-    function playBestOutOf(num) {
-        // play num rounds to see who wins 
-        let playerScore = 0;
-        let computerScore = 0;
-        let roundCount = 1;
-        
-        // use while loop to play num times
-        while (roundCount <= num) {  
-        // each round 
-      
-        // store output of playRound in roundSummary variable [winner, playerMessage]
-        let roundSummary = playRound(getPlayerChoice(), getComputerChoice());
-        // if computer is winner, increment computerScore by 1 
-        if (roundSummary[0] === 'computer') {
-            computerScore++;
-        } else if (roundSummary[0] === 'player') {
-         // if player is winner, increment playerScore by 1
-            playerScore++;
-        }
-
-        // print player message to console 
-        console.log(`Round: ${roundCount}. ${roundSummary[1]} Player Score: ${playerScore}. Computer Score: ${computerScore}.`);
-        roundCount++;
-        }
-
-        // after loop has completed, if playerScore is higher, print 'player is all-time winner' to console 
-        if (computerScore > playerScore) {
-            console.log(`Game's done. Computer is the all-time winner :( Final Score -- Player: ${playerScore}. Computer: ${computerScore}.`);
-        }
-        // if computerScore is higher, print 'computer is all-time winner' to console
-        else if (playerScore > computerScore) {
-            console.log(`Game's done. Player is the all-time winner :) Final Score -- Player: ${playerScore}. Computer: ${computerScore}.`);
-        } 
-        else {
-            console.log(`It's a tie! Winning eludes both player and computer.`)
-        }
-    }
-
-    // test for 2 rounds of playBestOutOf 
-    // playBestOutOf(2);
-
-    // execute playBestOutOf to play x number of rounds of game 
-    playBestOutOf(howManyRounds());
+    test script
 
 </script>
 -->
+
+
 </html>

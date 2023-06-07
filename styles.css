@@ -11,24 +11,22 @@ body {
     justify-content: space-between;
 }
 
-button {
-    margin: 0;
-}
-
 .game-container {
     flex: 1;
     padding: 2em;
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: center;
     align-content: center;
+
 }
 
 .button-container {
+    padding-bottom: 8em;
     display: flex;
     flex-wrap: wrap; 
     justify-content: space-around;
-    align-items: center;
+    align-items: stretch;
     align-content: center;
 }
 
@@ -43,7 +41,6 @@ button.choice {
  }
 
 .score-container {
-    flex-shrink: 0;
     font-size: 2em;
     padding: 0.5em 1em 0;
     display: flex;
@@ -51,13 +48,20 @@ button.choice {
     align-items: center;
 }
 
-.player-message {
+#player-msg-txt {
     text-align: center;
     margin-bottom: 0.5em;
 }
 
-.scoreboard {
+#scoreboard {
     max-width: max-content;
+    text-align: center;
+}
+
+.goodbye {
+    font-size: 3em;
+    text-align: center;
+    max-height: max-content;
 }
 
 .footer-container {
