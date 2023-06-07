@@ -22,7 +22,7 @@ body {
 }
 
 .button-container {
-    padding-bottom: 8em;
+    padding-bottom: 10vh;
     display: flex;
     flex-wrap: wrap; 
     justify-content: space-around;
@@ -38,6 +38,12 @@ button.choice {
     font-size: 3em;
     border: 0.15em solid black;
     min-width: 30vh;
+ }
+
+ button.choice:hover {
+    transform: scale(1.15);
+    max-width: 95vw;
+    border-radius: 25px;
  }
 
 .score-container {

@@ -122,76 +122,71 @@ function playBestOutOf(num) {
     let computerScore = 0;
     let roundCount = 1;
 
-    // link player message and scoreboard in html to JS 
-    let playerMessage = document.getElementById("player-msg-txt");
-    let scoreboard = document.getElementById("scoreboard");
-
-    //update scoreboard div to reflect opening score 0:0
-    // scoreboard.textContent = `Computer: ${computerScore} You: ${playerScore}`;
-
-    // store all html buttons (rock, paper, scissors)
+    // store all html buttons in array (rock, paper, scissors)
     const choices = document.querySelectorAll(".choice");
 
-    // each round - user click initiates round 
+    // invoke function tallyScore when user clicks on rock, paper, or scissors 
+    // play round and update scoreboard 
+    function tallyScore(event) {
+        //input - click event from button rock, paper, scissors 
+        // output - none 
+        let scoreboard = document.getElementById("scoreboard");
+
+        // store output of playRound in roundSummary variable [winner, playerMessage]
+        let roundSummary = playRound(event.target.id, getComputerChoice());
+
+        // if computer is winner, increment computerScore by 1 
+        if (roundSummary[0] === 'computer') {
+            computerScore++;
+        } else if (roundSummary[0] === 'player') {
+            // if player is winner, increment playerScore by 1
+            playerScore++;
+        }
+
+        // update scoreboard on UI 
+        scoreboard.textContent = `Round: ${roundCount} of ${num}. ${roundSummary[1]} Computer: ${computerScore}. You: ${playerScore}.`;
+
+        //increment score 
+        roundCount++;
+
+        // if roundCount equals num, set scoreboard to appropriate final message
+        if (roundCount > num) {
+
+            // update rock button to 'thanks for playing' on UI
+            const rockButton = document.getElementById("rock");
+            rockButton.textContent = `Thanks for playing!`;
+            rockButton.removeEventListener("click", tallyScore);
+
+            // update scissors button to 'play again' on UI
+            const scissorsButton = document.getElementById("scissors");
+            scissorsButton.style.backgroundColor = "blue";
+            scissorsButton.textContent = "Play again";
+            scissorsButton.addEventListener("click", () => location.reload());
+
+            // update paper button to appropriate game summary on UI
+            const paperButton = document.getElementById("paper");
+            paperButton.removeEventListener("click", tallyScore);
+
+            // playerScore is higher, game summary is 'player is all-time winner' 
+            if (computerScore > playerScore) {
+                console.log(`Game's done. Computer is the all-time winner :( Final Score -- Player: ${playerScore}. Computer: ${computerScore}.`);
+                paperButton.textContent = `Computer is the all-time winner :( Final Score -- Player: ${playerScore}. Computer: ${computerScore}.`;
+            }
+            // if computerScore is higher, print 'computer is all-time winner' to console
+            if (playerScore > computerScore) {
+                console.log(`Game's done. Player is the all-time winner :) Final Score -- Player: ${playerScore}. Computer: ${computerScore}.`);
+                paperButton.textContent = `You're the all-time winner :) Final Score -- Player: ${playerScore}. Computer: ${computerScore}.`;
+            }
+            if (playerScore === computerScore) {
+                console.log(`It's a tie! Winning eludes both player and computer.`);
+                paperButton.textContent = `It's a tie! Winning eludes both you and the computer.`;
+            }
+        }
+    }
+
+    // user click initiates round 
     choices.forEach(choice => {
-        choice.addEventListener("click", () => {
-
-            // store output of playRound in roundSummary variable [winner, playerMessage]
-            let roundSummary = playRound(choice.id, getComputerChoice());
-
-            // if computer is winner, increment computerScore by 1 
-            if (roundSummary[0] === 'computer') {
-                computerScore++;
-            } else if (roundSummary[0] === 'player') {
-                // if player is winner, increment playerScore by 1
-                playerScore++;
-            }
-
-            // update scoreboard on UI 
-            scoreboard.textContent = `Round: ${roundCount} of ${num}. ${roundSummary[1]} Computer: ${computerScore}. You: ${playerScore}.`;
-
-            //increment score 
-            roundCount++;
-
-            // if roundCount equals num, set scoreboard to appropriate final message
-            if (roundCount > num) {
-                let message = '';
-
-                // update rock button to 'thanks for playing' 
-                const rockButton = document.getElementById("rock");
-                rockButton.textContent = `Thanks for playing!`;
-
-                // update scissors button to play again button
-                const scissorsButton = document.getElementById("scissors");
-                scissorsButton.style.backgroundColor = "blue";
-                scissorsButton.textContent = "Play again";
-                scissorsButton.addEventListener("click", () => location.reload());
-
-
-                // update paper button to game summary 
-                const paperButton = document.getElementById("paper");
-
-                // playerScore is higher, game summary is 'player is all-time winner' 
-                if (computerScore > playerScore) {
-                    console.log(`Game's done. Computer is the all-time winner :( Final Score -- Player: ${playerScore}. Computer: ${computerScore}.`);
-                    paperButton.textContent = `Computer is the all-time winner :( Final Score -- Player: ${playerScore}. Computer: ${computerScore}.`;
-                }
-                // if computerScore is higher, print 'computer is all-time winner' to console
-                if (playerScore > computerScore) {
-                    console.log(`Game's done. Player is the all-time winner :) Final Score -- Player: ${playerScore}. Computer: ${computerScore}.`);
-                    paperButton.textContent = `You're the all-time winner :) Final Score -- Player: ${playerScore}. Computer: ${computerScore}.`;
-                }
-                if (playerScore === computerScore) {
-                    console.log(`It's a tie! Winning eludes both player and computer.`);
-                    paperButton.textContent = `It's a tie! Winning eludes both you and the computer.`;
-                }
-
-
-
-                return;
-            }
-
-        });
+        choice.addEventListener("click", tallyScore);
     });
 }
 
