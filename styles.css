@@ -46,7 +46,7 @@ body {
 
  /* changes briefly when button is clicked */
  button.clicking {
-    background-color: rgb(138, 180, 79);
+    background-color: yellowgreen;
  }
 
 .score-container {

@@ -2,15 +2,24 @@
 function howManyRounds() {
     //input - none - invoked with nothing passed in when site loads 
     //output - number of rounds to play 
+
+    // ask user how many rounds to play
     let numOfRounds = prompt(`Welcome to Rock, Paper, Scissors. How many rounds would you like to play?`);
+    
+    // if user inputs an invalid number
     if (numOfRounds < 1 || numOfRounds > 10) {
         let secondChanceNum;
+        
+        // give guidance on picking a valid number 
         if (numOfRounds < 1) secondChanceNum = prompt(`Please add at least 1 round.`);
         if (numOfRounds > 10) secondChanceNum = prompt(`That's probably too many for today. Choose less than 10 rounds.`);
+        
+        // if number is still invalid, send to goodbye message 
         if (secondChanceNum < 1 || secondChanceNum > 10) {
             let message = "You gotta play by the rules. See ya next time!";
             sayGoodbye(message);
         }
+
        return secondChanceNum; 
     }
     // uncomment console log when testing function
@@ -23,7 +32,7 @@ function howManyRounds() {
 
 // remove game buttons and scoreboard from UI and show final status
 function sayGoodbye(status) {
-    //input - string with status 
+    //input - string with goodbye message  
     //output - none
 
     // remove the rock paper scissors buttons and scoreboard 
@@ -32,7 +41,7 @@ function sayGoodbye(status) {
         gameContainer.removeChild(gameContainer.firstChild);
     }
 
-    // replace with 'goodbye' message when you don't play by the rules
+    // replace with 'goodbye' message
     const goodbye = document.createElement("div");
     goodbye.classList.add("goodbye");
     goodbye.textContent = status;
@@ -57,10 +66,10 @@ function getComputerChoice() {
     else if (randomNum < 0.67) computerChoice = 'paper';
     // if number is in top 3rd (0.68-1), assign computerChoice to 'scissors'
     else computerChoice = 'scissors';
-    // return computerChoice
 
     // uncomment console log when testing function
     // console.log(computerChoice);
+
     return computerChoice;
 }
 
@@ -69,6 +78,9 @@ function getComputerChoice() {
 
 // get playerChoice value via user prompt
 function getPlayerChoice() {
+    //input - none, user inputs when prompted 
+    //output - string with user choice 
+
     const choice = prompt(`Rock, paper, scissors...shoot! What's your choice?`);
 
     // uncomment console log when testing function
@@ -81,8 +93,8 @@ function getPlayerChoice() {
 
 // play round of rock paper scissors 
 function playRound(playerChoice, computerChoice) {
-    //input - playerChoice - output of getPlayerChoice function, computerChoice - output of getComputerChoice function
-    //output - string like 'You lose! Paper beats rock!' 
+    //input - playerChoice - get from click or output of getPlayerChoice function, computerChoice - output of getComputerChoice function
+    //output - array with ['winner', string like 'You lose! Paper beats rock!']
 
     // if player does not choose rock, paper, or scissors, ask them to try again 
     if (playerChoice.toLowerCase() !== 'rock' && playerChoice.toLowerCase() !== 'paper' && playerChoice.toLowerCase() !== 'scissors') {
@@ -118,40 +130,36 @@ function playRound(playerChoice, computerChoice) {
 
 // play x number of rounds to see who wins 
 function playBestOutOf(num) {
-    // play num rounds to see who wins 
+    // start score and round count 
     let playerScore = 0;
     let computerScore = 0;
     let roundCount = 1;
 
-    // store all html buttons in array (rock, paper, scissors)
-    const choices = document.querySelectorAll(".choice");
-
-    // invoke function tallyScore when user clicks on rock, paper, or scissors 
-    // play round and update scoreboard 
+    // callback function to invoke when user clicks rock, paper, or scissors
     function tallyScore(event) {
         //input - click event from button rock, paper, scissors 
         // output - none 
 
-        let scoreboard = document.getElementById("scoreboard");
+        // playRound and store result [winner, playerMessage]
+        let roundSummary = playRound(event.target.id, getComputerChoice());        
 
-        // store output of playRound in roundSummary variable [winner, playerMessage]
-        let roundSummary = playRound(event.target.id, getComputerChoice());
-
-        // if computer is winner, increment computerScore by 1 
+        // if computer is winner, increment computerScore by 1 for scoreboard
         if (roundSummary[0] === 'computer') {
             computerScore++;
         } else if (roundSummary[0] === 'player') {
-            // if player is winner, increment playerScore by 1
+            // if player is winner, increment playerScore by 1 for scoreboard
             playerScore++;
         }
 
         // update scoreboard on UI 
+        let scoreboard = document.getElementById("scoreboard");
         scoreboard.textContent = `Round: ${roundCount} of ${num}. ${roundSummary[1]} Computer: ${computerScore}. You: ${playerScore}.`;
 
-        //increment score 
+        //round has been played and score has been recorded
+        //increment roundCount 
         roundCount++;
 
-        // if roundCount equals num, set scoreboard to appropriate final message
+        // when all rounds have been played, set scoreboard to appropriate final message
         if (roundCount > num) {
 
             // update rock button to 'thanks for playing' on UI
@@ -171,22 +179,27 @@ function playBestOutOf(num) {
 
             // playerScore is higher, game summary is 'player is all-time winner' 
             if (computerScore > playerScore) {
+                paperButton.style.backgroundColor = "firebrick";
                 console.log(`Game's done. Computer is the all-time winner :( Final Score -- Player: ${playerScore}. Computer: ${computerScore}.`);
                 paperButton.textContent = `Computer is the all-time winner :( Final Score -- Player: ${playerScore}. Computer: ${computerScore}.`;
             }
             // if computerScore is higher, print 'computer is all-time winner' to console
             if (playerScore > computerScore) {
+                paperButton.style.backgroundColor = "turquoise";
                 console.log(`Game's done. Player is the all-time winner :) Final Score -- Player: ${playerScore}. Computer: ${computerScore}.`);
                 paperButton.textContent = `You're the all-time winner :) Final Score -- Player: ${playerScore}. Computer: ${computerScore}.`;
             }
             if (playerScore === computerScore) {
+                paperButton.style.backgroundColor = "silver";
                 console.log(`It's a tie! Winning eludes both player and computer.`);
                 paperButton.textContent = `It's a tie! Winning eludes both you and the computer.`;
             }
         }
     }
 
-    // user click initiates round 
+    // add listener to all buttons that initiates round when user clicks a button
+    const choices = document.querySelectorAll(".choice");
+
     choices.forEach(choice => {
         choice.addEventListener("click", tallyScore);
     });
