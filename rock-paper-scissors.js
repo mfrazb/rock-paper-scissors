@@ -11,6 +11,7 @@ function howManyRounds() {
             let message = "You gotta play by the rules. See ya next time!";
             sayGoodbye(message);
         }
+       return secondChanceNum; 
     }
     // uncomment console log when testing function
     // console.log(numOfRounds);
@@ -130,6 +131,7 @@ function playBestOutOf(num) {
     function tallyScore(event) {
         //input - click event from button rock, paper, scissors 
         // output - none 
+
         let scoreboard = document.getElementById("scoreboard");
 
         // store output of playRound in roundSummary variable [winner, playerMessage]
@@ -188,6 +190,15 @@ function playBestOutOf(num) {
     choices.forEach(choice => {
         choice.addEventListener("click", tallyScore);
     });
+
+   function removeTransition(event) {
+    this.classList.remove("clicking");
+   } 
+
+   // add to code to remove any transitions after transition is complete
+//    choices.forEach(choice => {
+//     choice.addEventListener('transitioned', removeTransition);
+//    });
 }
 
 // // test for 2 rounds of playBestOutOf 

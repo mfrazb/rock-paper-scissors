@@ -42,8 +42,11 @@ button.choice {
 
  button.choice:hover {
     transform: scale(1.15);
-    max-width: 95vw;
     border-radius: 25px;
+ }
+
+ .clicking {
+    background-color: lightgreen;
  }
 
 .score-container {
