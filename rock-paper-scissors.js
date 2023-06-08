@@ -5,22 +5,22 @@ function howManyRounds() {
 
     // ask user how many rounds to play
     let numOfRounds = prompt(`Welcome to Rock, Paper, Scissors. How many rounds would you like to play?`);
-    
+
     // if user inputs an invalid number
     if (numOfRounds < 1 || numOfRounds > 10) {
         let secondChanceNum;
-        
+
         // give guidance on picking a valid number 
         if (numOfRounds < 1) secondChanceNum = prompt(`Please add at least 1 round.`);
         if (numOfRounds > 10) secondChanceNum = prompt(`That's probably too many for today. Choose less than 10 rounds.`);
-        
+
         // if number is still invalid, send to goodbye message 
         if (secondChanceNum < 1 || secondChanceNum > 10) {
             let message = "You gotta play by the rules. See ya next time!";
             sayGoodbye(message);
         }
 
-       return secondChanceNum; 
+        return secondChanceNum;
     }
     // uncomment console log when testing function
     // console.log(numOfRounds);
@@ -140,8 +140,11 @@ function playBestOutOf(num) {
         //input - click event from button rock, paper, scissors 
         // output - none 
 
+        // button flashes yellowgreen when user clicks 
+        event.target.classList.add("clicking");
+
         // playRound and store result [winner, playerMessage]
-        let roundSummary = playRound(event.target.id, getComputerChoice());        
+        let roundSummary = playRound(event.target.id, getComputerChoice());
 
         // if computer is winner, increment computerScore by 1 for scoreboard
         if (roundSummary[0] === 'computer') {
@@ -180,14 +183,14 @@ function playBestOutOf(num) {
             // playerScore is higher, game summary is 'player is all-time winner' 
             if (computerScore > playerScore) {
                 paperButton.style.backgroundColor = "firebrick";
-                console.log(`Game's done. Computer is the all-time winner :( Final Score -- Player: ${playerScore}. Computer: ${computerScore}.`);
-                paperButton.textContent = `Computer is the all-time winner :( Final Score -- Player: ${playerScore}. Computer: ${computerScore}.`;
+                console.log(`Game's done. Computer is the winner :( Final Score -- Player: ${playerScore}. Computer: ${computerScore}.`);
+                paperButton.textContent = `Computer is the winner :( Final Score -- Player: ${playerScore}. Computer: ${computerScore}.`;
             }
             // if computerScore is higher, print 'computer is all-time winner' to console
             if (playerScore > computerScore) {
                 paperButton.style.backgroundColor = "turquoise";
-                console.log(`Game's done. Player is the all-time winner :) Final Score -- Player: ${playerScore}. Computer: ${computerScore}.`);
-                paperButton.textContent = `You're the all-time winner :) Final Score -- Player: ${playerScore}. Computer: ${computerScore}.`;
+                console.log(`Game's done. Player is the winner :) Final Score -- Player: ${playerScore}. Computer: ${computerScore}.`);
+                paperButton.textContent = `You're the winner :) Final Score -- Player: ${playerScore}. Computer: ${computerScore}.`;
             }
             if (playerScore === computerScore) {
                 paperButton.style.backgroundColor = "silver";
@@ -204,15 +207,15 @@ function playBestOutOf(num) {
         choice.addEventListener("click", tallyScore);
     });
 
-   function removeTransition(event) {
-    this.classList.remove("clicking");
-   } 
-
-   // add to code to remove any transitions after transition is complete
-//    choices.forEach(choice => {
-//     choice.addEventListener('transitioned', removeTransition);
-//    });
+    // callback to invoke when CSS transition is complete
+    function removeTransition(event) {
+        this.classList.remove("clicking");
+    }
+    // for all buttons, remove transitions after completed
+    choices.forEach(choice => choice.addEventListener("transitionend", removeTransition));
 }
+
+
 
 // // test for 2 rounds of playBestOutOf 
 // playBestOutOf(2);

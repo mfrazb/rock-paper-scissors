@@ -32,6 +32,7 @@ body {
 .choice {
     flex: 1;
     background-color: green; 
+    transition: background-color .07s;
     margin: 1vh;
     padding: 0.5em;
     font-size: 3em;
